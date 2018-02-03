@@ -1,3 +1,5 @@
+package de.elbosso.qbrowser;
+/*
 Copyright (c) 2012-2018.
 Juergen Key. Alle Rechte vorbehalten.
 Weiterverbreitung und Verwendung in nichtkompilierter oder kompilierter Form,
@@ -26,3 +28,18 @@ VERPFLICHTUNG AUCH IMMER, OB IN VERTRAG, STRIKTER VERPFLICHTUNG ODER
 UNERLAUBTE HANDLUNG (INKLUSIVE FAHRLAESSIGKEIT) VERANTWORTLICH, AUF WELCHEM
 WEG SIE AUCH IMMER DURCH DIE BENUTZUNG DIESER SOFTWARE ENTSTANDEN SIND, SOGAR,
 WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
+ */
+public class BooleanFalseSelector extends de.netsysit.util.validator.rules.BooleanFalseRule implements JMSMessageSelectorFormat
+{
+	static
+	{
+		de.netsysit.util.beans.InterfaceFactory.setSuperclassAssociationForEventDispatchThread(BooleanFalseSelector.class, de.netsysit.util.validator.rules.NotEmptyOrWSRule.class);
+	}
+	@Override
+	public String toJMSMessageSelector(String fieldName)
+	{
+		return java.text.MessageFormat.format("{0} = FALSE",fieldName);
+	}
+
+
+}

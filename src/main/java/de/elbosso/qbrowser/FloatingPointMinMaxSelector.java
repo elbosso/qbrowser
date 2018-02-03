@@ -1,3 +1,5 @@
+package de.elbosso.qbrowser;
+/*
 Copyright (c) 2012-2018.
 Juergen Key. Alle Rechte vorbehalten.
 Weiterverbreitung und Verwendung in nichtkompilierter oder kompilierter Form,
@@ -26,3 +28,18 @@ VERPFLICHTUNG AUCH IMMER, OB IN VERTRAG, STRIKTER VERPFLICHTUNG ODER
 UNERLAUBTE HANDLUNG (INKLUSIVE FAHRLAESSIGKEIT) VERANTWORTLICH, AUF WELCHEM
 WEG SIE AUCH IMMER DURCH DIE BENUTZUNG DIESER SOFTWARE ENTSTANDEN SIND, SOGAR,
 WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
+ */
+public class FloatingPointMinMaxSelector extends de.netsysit.util.validator.rules.FloatingPointMinMaxRule implements JMSMessageSelectorFormat
+{
+	static
+	{
+		de.netsysit.util.beans.InterfaceFactory.setSuperclassAssociationForEventDispatchThread(FloatingPointMinMaxSelector.class, de.netsysit.util.validator.rules.FloatingPointRule.class);
+	}
+	@Override
+	public String toJMSMessageSelector(String fieldName)
+	{
+		return java.text.MessageFormat.format("{0} between {1} and {2}",fieldName, java.lang.Double.toString(getMin()),java.lang.Double.toString(getMax()));
+	}
+
+
+}

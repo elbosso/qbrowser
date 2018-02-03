@@ -1,3 +1,5 @@
+package de.elbosso.qbrowser;
+/*
 Copyright (c) 2012-2018.
 Juergen Key. Alle Rechte vorbehalten.
 Weiterverbreitung und Verwendung in nichtkompilierter oder kompilierter Form,
@@ -26,3 +28,8 @@ VERPFLICHTUNG AUCH IMMER, OB IN VERTRAG, STRIKTER VERPFLICHTUNG ODER
 UNERLAUBTE HANDLUNG (INKLUSIVE FAHRLAESSIGKEIT) VERANTWORTLICH, AUF WELCHEM
 WEG SIE AUCH IMMER DURCH DIE BENUTZUNG DIESER SOFTWARE ENTSTANDEN SIND, SOGAR,
 WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
+ */
+public interface JMSMessageSelectorFormat extends de.netsysit.util.validator.Rule
+{
+	String toJMSMessageSelector(String fieldName);
+}

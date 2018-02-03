@@ -1,3 +1,5 @@
+package de.elbosso.qbrowser;
+/*
 Copyright (c) 2012-2018.
 Juergen Key. Alle Rechte vorbehalten.
 Weiterverbreitung und Verwendung in nichtkompilierter oder kompilierter Form,
@@ -26,3 +28,18 @@ VERPFLICHTUNG AUCH IMMER, OB IN VERTRAG, STRIKTER VERPFLICHTUNG ODER
 UNERLAUBTE HANDLUNG (INKLUSIVE FAHRLAESSIGKEIT) VERANTWORTLICH, AUF WELCHEM
 WEG SIE AUCH IMMER DURCH DIE BENUTZUNG DIESER SOFTWARE ENTSTANDEN SIND, SOGAR,
 WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
+ */
+public class DateAfterSelector extends de.netsysit.util.validator.rules.DateAfterRule implements JMSMessageSelectorFormat
+{
+	static
+	{
+		de.netsysit.util.beans.InterfaceFactory.setSuperclassAssociationForEventDispatchThread(DateAfterSelector.class, de.netsysit.util.validator.rules.NotEmptyOrWSRule.class);
+	}
+	@Override
+	public String toJMSMessageSelector(String fieldName)
+	{
+		return java.text.MessageFormat.format("{0} > {1}",fieldName, Long.toString(getDate().getTimeInMillis()));
+	}
+
+
+}

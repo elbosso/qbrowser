@@ -1,3 +1,5 @@
+package de.elbosso.qbrowser;
+/*
 Copyright (c) 2012-2018.
 Juergen Key. Alle Rechte vorbehalten.
 Weiterverbreitung und Verwendung in nichtkompilierter oder kompilierter Form,
@@ -26,3 +28,54 @@ VERPFLICHTUNG AUCH IMMER, OB IN VERTRAG, STRIKTER VERPFLICHTUNG ODER
 UNERLAUBTE HANDLUNG (INKLUSIVE FAHRLAESSIGKEIT) VERANTWORTLICH, AUF WELCHEM
 WEG SIE AUCH IMMER DURCH DIE BENUTZUNG DIESER SOFTWARE ENTSTANDEN SIND, SOGAR,
 WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
+ */
+import de.elbosso.util.lang.annotations.BeanInfo;
+import de.elbosso.util.lang.annotations.Property;
+
+@BeanInfo(i18nBundle = "\"de.netsysit.util.i18n\"")
+public class ContainsSubstringSelector extends de.netsysit.util.validator.rules.ContainsSubstringRule implements JMSMessageSelectorFormat
+{
+	static
+	{
+		de.netsysit.util.beans.InterfaceFactory.setSuperclassAssociationForEventDispatchThread(ContainsSubstringSelector.class, de.netsysit.util.validator.rules.NotNullRule.class);
+	}
+
+	public ContainsSubstringSelector()
+	{
+		super();
+		setCasesensitive(true);
+	}
+
+	@Override
+	public String toJMSMessageSelector(String fieldName)
+	{
+		return java.text.MessageFormat.format("{0} LIKE ''%{1}%''",fieldName,getSubstring());
+	}
+
+	@Property(hidden = true)
+	@Override
+	public boolean isCasesensitive()
+	{
+		return super.isCasesensitive();
+	}
+
+	@Property(hidden = true)
+	@Override
+	public void setCasesensitive(boolean casesensitive)
+	{
+		super.setCasesensitive(casesensitive);
+	}
+
+	@Property(displayName = "i18n.getString(\"ContainsSubstringRuleBeanInfo.substring.displayname\")")
+	@Override
+	public void setSubstring(String substring)
+	{
+		super.setSubstring(substring);
+	}
+	@Property
+	@Override
+	public String getSubstring()
+	{
+		return super.getSubstring();
+	}
+}

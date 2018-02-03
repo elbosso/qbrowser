@@ -1,3 +1,5 @@
+package de.elbosso.qbrowser;
+/*
 Copyright (c) 2012-2018.
 Juergen Key. Alle Rechte vorbehalten.
 Weiterverbreitung und Verwendung in nichtkompilierter oder kompilierter Form,
@@ -26,3 +28,24 @@ VERPFLICHTUNG AUCH IMMER, OB IN VERTRAG, STRIKTER VERPFLICHTUNG ODER
 UNERLAUBTE HANDLUNG (INKLUSIVE FAHRLAESSIGKEIT) VERANTWORTLICH, AUF WELCHEM
 WEG SIE AUCH IMMER DURCH DIE BENUTZUNG DIESER SOFTWARE ENTSTANDEN SIND, SOGAR,
 WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
+ */
+import javax.swing.*;
+import java.awt.*;
+
+public class QueueBrowserConfigPanel extends javax.swing.JPanel
+{
+	private final javax.swing.JTextField msTf;
+
+	public QueueBrowserConfigPanel()
+	{
+		super(new java.awt.BorderLayout());
+		de.netsysit.ui.components.FormPanel qPanel = new de.netsysit.ui.components.FormPanel();
+		msTf=new javax.swing.JTextField();
+		qPanel.addRow("Message selector", "Message selector", msTf);
+		add(qPanel, BorderLayout.NORTH);
+	}
+	java.lang.String getMessgeSelector()
+	{
+		return msTf.getText();
+	}
+}
