@@ -53,7 +53,7 @@ public class MessageDetailPanel extends javax.swing.JPanel implements java.awt.e
 			new de.netsysit.documents.VelocitySyntaxDocument(),
 	};
 	private javax.swing.Action inspectBinaryDataAction;
-	//private de.netsysit.db.ui.components.ByteArrayDialog badialog;//new de.netsysit.db.ui.components.ByteArrayDialog(null,i18n.getString("ViewPanel.inspectBinaryDataAction.dialog.title"),false);
+	private de.elbosso.ui.dialog.ByteArrayDialog badialog;//new de.elbosso.ui.dialog.ByteArrayDialog(null,i18n.getString("ViewPanel.inspectBinaryDataAction.dialog.title"),false);
 	byte[] underpopupba;
 
 	MessageDetailPanel()
@@ -93,8 +93,8 @@ public class MessageDetailPanel extends javax.swing.JPanel implements java.awt.e
 		tb.add(textEditor.getToggleBookmarkAction());
 		tb.add(textEditor.getGotoNextBookmarkAction());
 		tb.addSeparator();
-//		tb.add(inspectBinaryDataAction);
-//		tb.addSeparator();
+		tb.add(inspectBinaryDataAction);
+		tb.addSeparator();
 		documentsComboBox=new javax.swing.JComboBox(supportedDocumentTypes);
 		documentsComboBox.setSelectedIndex(0);
 		tb.add(documentsComboBox);
@@ -160,7 +160,7 @@ public class MessageDetailPanel extends javax.swing.JPanel implements java.awt.e
 		{;
 			public void actionPerformed(java.awt.event.ActionEvent evt)
 			{
-/*				if(underpopupba!=null)
+				if(underpopupba!=null)
 				{
 					if(badialog==null)
 					{
@@ -168,19 +168,19 @@ public class MessageDetailPanel extends javax.swing.JPanel implements java.awt.e
 						if(root!=null)
 						{
 							if(root instanceof java.awt.Dialog)
-								badialog=new de.netsysit.db.ui.components.ByteArrayDialog((java.awt.Dialog)root,"BytesMessage",false,null);
+								badialog=new de.elbosso.ui.dialog.ByteArrayDialog((java.awt.Dialog)root,"BytesMessage",false,null);
 							else
-								badialog=new de.netsysit.db.ui.components.ByteArrayDialog((java.awt.Frame)root,"BytesMessage",false,null);
+								badialog=new de.elbosso.ui.dialog.ByteArrayDialog((java.awt.Frame)root,"BytesMessage",false,null);
 						}
 						else
-							badialog=new de.netsysit.db.ui.components.ByteArrayDialog((java.awt.Frame)null,"BytesMessage",false,null);
+							badialog=new de.elbosso.ui.dialog.ByteArrayDialog((java.awt.Frame)null,"BytesMessage",false,null);
 					}
 					badialog.setLocationRelativeTo(MessageDetailPanel.this);
 					badialog.setSize(new java.awt.Dimension(300,300));
 					badialog.showDialog(underpopupba);
 					underpopupba=null;
 				}
-*/			}
+			}
 		};
 		inspectBinaryDataAction.setEnabled(false);
 	}
