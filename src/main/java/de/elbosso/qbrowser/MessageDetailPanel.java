@@ -183,6 +183,7 @@ public class MessageDetailPanel extends javax.swing.JPanel implements java.awt.e
 			}
 		};
 		inspectBinaryDataAction.setEnabled(false);
+		inspectBinaryDataAction.putValue(Action.SMALL_ICON,new javax.swing.ImageIcon(de.netsysit.util.ResourceLoader.getImgResource("action/drawable-mdpi/ic_lightbulb_outline_black_48dp.png")));
 	}
 	public void update(javax.jms.Message message)
 	{
