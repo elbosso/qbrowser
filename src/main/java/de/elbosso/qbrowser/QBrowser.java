@@ -36,7 +36,10 @@ WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
 import org.apache.log4j.Level;
 
 import javax.naming.Context;
+import javax.naming.NameClassPair;
+import javax.naming.NamingEnumeration;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.util.Hashtable;
@@ -170,9 +173,16 @@ public class QBrowser extends javax.swing.JFrame implements java.awt.event.Windo
 						env.put(Context.PROVIDER_URL, target.getContextProviderURL());
 						env.put(Context.SECURITY_PRINCIPAL, target.getCredentials().getUserName());
 						env.put(Context.SECURITY_CREDENTIALS, target.getCredentials().getPassword());
+						env.put("connectionFactory.ConnectionFactory",target.getContextProviderURL());
+						if (CLASS_LOGGER.isDebugEnabled()) CLASS_LOGGER.debug("env " + env);
 						javax.naming.Context jndiContext = new javax.naming.InitialContext(env);
+						NamingEnumeration<NameClassPair> list = jndiContext.list("");
+						while (list.hasMore()) {
+							NameClassPair nameClassPair=list.next();
+							if (CLASS_LOGGER.isDebugEnabled()) CLASS_LOGGER.debug(nameClassPair.getName()+" "+nameClassPair.getClassName());
+						}
 						javax.jms.ConnectionFactory connectionFactory = (javax.jms.ConnectionFactory) jndiContext.lookup("ConnectionFactory");
-						javax.jms.Connection connection = connectionFactory.createConnection();
+						javax.jms.Connection connection = connectionFactory.createConnection(env.get(Context.SECURITY_PRINCIPAL).toString(), env.get(Context.SECURITY_CREDENTIALS).toString());
 						connection.setClientID(QBrowser.class.getName()+"::"+target.getContextProviderURL());
 						ConnectionPanel cp=new ConnectionPanel(connection);
 						connectionPanels.add(cp);
