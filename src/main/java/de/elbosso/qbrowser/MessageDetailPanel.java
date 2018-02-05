@@ -216,7 +216,7 @@ public class MessageDetailPanel extends javax.swing.JPanel implements java.awt.e
 				{
 					textEditor.setText(((javax.jms.TextMessage)message).getText());
 				}
-				if(javax.jms.BytesMessage.class.isAssignableFrom(message.getClass()))
+				else if(javax.jms.BytesMessage.class.isAssignableFrom(message.getClass()))
 				{
 					javax.jms.BytesMessage bm=((javax.jms.BytesMessage)message);
 					byte[] buf=new byte[4096];
