@@ -156,9 +156,9 @@ public class QBrowser extends javax.swing.JFrame implements java.awt.event.Windo
 			public void actionPerformed(java.awt.event.ActionEvent evt)
 			{
 				Target target=new Target();
-				target.setContextProviderURL("tcp://localhost:61616");
-				target.setCredentials(new de.netsysit.ui.dialog.LoginDialog.BasicCredentials("admin","admin"));
-				target.setInitialContextFactory("org.apache.activemq.jndi.ActiveMQInitialContextFactory");
+				target.setContextProviderURL("tcp://localhost:8181?httpUpgradeEnabled=true");
+				target.setCredentials(new de.netsysit.ui.dialog.LoginDialog.BasicCredentials("jmsjboss","jmsjboss_1"));
+				target.setInitialContextFactory("org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory");
 				de.netsysit.util.beans.InterfaceFactory interfaceFactory=new de.netsysit.util.beans.InterfaceFactory();
 				try
 				{

@@ -57,8 +57,6 @@ public class ConnectionPanelSupport extends java.lang.Object
 			{
 				if (connectionMetaData.getProviderVersion().equals("1.5.5"))
 					buildAndManageTreeModelArtemis1x(connectionPanel);
-				else if (connectionMetaData.getProviderVersion().equals("2.4.0"))
-					buildAndManageTreeModelArtemis2x(connectionPanel);
 				else if (connectionMetaData.getProviderVersion().equals("5.15.2"))
 					buildAndManageTreeModelActiveMQ5x(connectionPanel);
 				else
@@ -84,24 +82,6 @@ public class ConnectionPanelSupport extends java.lang.Object
 		javax.jms.QueueRequestor requestor = new javax.jms.QueueRequestor(session, managementQueue);
 		javax.jms.Message m = session.createMessage();
 		org.apache.activemq.artemis.api.jms.management.JMSManagementHelper.putAttribute(m, ResourceNames.JMS_SERVER, "queueNames");
-		javax.jms.Message reply = requestor.request(m);
-		Object[] queueNames = (Object[]) org.apache.activemq.artemis.api.jms.management.JMSManagementHelper.getResult(reply);
-		for (Object queueName : queueNames)
-		{
-			System.out.println("Queue name: " + queueName+" "+(queueName.getClass()));
-			javax.jms.Queue queueInQuestion = org.apache.activemq.artemis.api.jms.ActiveMQJMSClient.createQueue(queueName.toString());
-			if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(queueInQuestion);
-			javax.swing.tree.DefaultMutableTreeNode node=new javax.swing.tree.DefaultMutableTreeNode(queueInQuestion);
-			connectionPanel.treeModel.insertNodeInto(node,connectionPanel.queueNode,connectionPanel.queueNode.getChildCount());
-		}
-	}
-	private static void buildAndManageTreeModelArtemis2x(ConnectionPanel connectionPanel) throws java.lang.Exception
-	{
-		javax.jms.QueueSession session = ((org.apache.activemq.artemis.jms.client.ActiveMQConnection)connectionPanel.connection).createQueueSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
-		javax.jms.Queue managementQueue = org.apache.activemq.artemis.api.jms.ActiveMQJMSClient.createQueue("activemq.management");
-		javax.jms.QueueRequestor requestor = new javax.jms.QueueRequestor(session, managementQueue);
-		javax.jms.Message m = session.createMessage();
-		org.apache.activemq.artemis.api.jms.management.JMSManagementHelper.putAttribute(m, org.apache.activemq.artemis.api.core.management.ResourceNames.BROKER, "queueNames");
 		javax.jms.Message reply = requestor.request(m);
 		Object[] queueNames = (Object[]) org.apache.activemq.artemis.api.jms.management.JMSManagementHelper.getResult(reply);
 		for (Object queueName : queueNames)
