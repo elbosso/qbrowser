@@ -120,6 +120,8 @@ public class QBrowser extends javax.swing.JFrame implements java.awt.event.Windo
 			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/error_48.png","social/drawable-mdpi/ic_sentiment_very_dissatisfied_black_48dp.png");
 			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/warning_48.png","social/drawable-mdpi/ic_sentiment_dissatisfied_black_48dp.png");
 			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/info_48.png","social/drawable-mdpi/ic_sentiment_neutral_black_48dp.png");
+			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/info_48.png","social/drawable-mdpi/ic_sentiment_neutral_black_48dp.png");
+			iconFallbacks.setProperty("de/elbosso/ressources/gfx/thirdparty/Gnome-colors-fusion-icon2_48.png","social/drawable-mdpi/ic_plus_one_black_48dp.png");
 			de.netsysit.util.ResourceLoader.configure(iconFallbacks);
 		}
 		catch(java.io.IOException ioexp)

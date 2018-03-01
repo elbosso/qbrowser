@@ -33,6 +33,8 @@ import de.elbosso.model.table.JMSMessageCollectionModel;
 import de.elbosso.util.validator.RuleSet;
 import de.netsysit.util.validator.Rule;
 
+import javax.jms.JMSException;
+import javax.jms.TextMessage;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
@@ -47,6 +49,7 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 	private final static org.apache.log4j.Logger CLASS_LOGGER = org.apache.log4j.Logger.getLogger(QueueBrowserPanel.class);
 	private final static org.apache.log4j.Logger EXCEPTION_LOGGER = org.apache.log4j.Logger.getLogger("ExceptionCatcher");
 	private final javax.jms.Session session;
+	private final JSpinner textMessageNumberSpinner;
 	private de.elbosso.model.table.JMSMessageCollectionModel model;
 	private de.netsysit.ui.components.SophisticatedRenderingTable table;
 	private final javax.swing.JToolBar toolbar;
@@ -55,9 +58,11 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 	private javax.swing.Action configFilterAction;
 	private javax.swing.Action deleteAction;
 	private javax.swing.Action manageFilterAction;
+	private javax.swing.Action generateTextMessageAction;
 	private java.lang.String destinationName;
 	private de.netsysit.ui.dialog.GeneralPurposeOkCancelDialog gpocd;
 	private QueueBrowserConfigPanel queueBrowserConfigPanel;
+	private TextMessageGeneratorPanel textMessageGeneratorPanel;
 	private MessageDetailPanel messageDetailPanel;
 	protected javax.swing.JPopupMenu headerpopup =new javax.swing.JPopupMenu();
 	protected javax.swing.JPopupMenu popup;
@@ -66,6 +71,7 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 	private de.netsysit.ui.dialog.GeneralPurposeInfoDialog gpid;
 	private java.util.Map<java.lang.String,RuleSet> ruleSetMap;
 	private java.util.Map<java.lang.Class,JMSMessageSelectorFormat[]> class2MsgSelMap;
+	private javax.jms.Queue queue;
 
 	public QueueBrowserPanel(javax.jms.Session session,java.lang.String destinationName) throws javax.jms.JMSException
 	{
@@ -81,15 +87,15 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 		toolbar.add(deleteAction);
 		toolbar.addSeparator();
 		String selector = queueBrowserConfigPanel!=null?queueBrowserConfigPanel.getMessgeSelector():null;
-		javax.jms.Queue q = session.createQueue(destinationName);
+		queue = session.createQueue(destinationName);
 		javax.jms.QueueBrowser qb;
 		if (selector == null)
 		{
-			qb = session.createBrowser(q);
+			qb = session.createBrowser(queue);
 		}
 		else
 		{
-			qb = session.createBrowser(q, selector);
+			qb = session.createBrowser(queue, selector);
 		}
 		model=new de.elbosso.model.table.JMSMessageCollectionModel(Collections.EMPTY_LIST);
 		int n = model.load(qb.getEnumeration(),null);
@@ -152,19 +158,67 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 				new BooleanTrueSelector(),
 				new NotNullSelector()
 		});
+		toolbar.addSeparator();
+		toolbar.add(generateTextMessageAction);
+		textMessageNumberSpinner = new JSpinner(new SpinnerNumberModel(1,1, Integer.MAX_VALUE,10));
+		toolbar.add(textMessageNumberSpinner);
 	}
 	private void createActions()
 	{
 		refreshAction=new de.elbosso.util.pattern.command.RefreshAction(this);
+		generateTextMessageAction=new javax.swing.AbstractAction(null,new javax.swing.ImageIcon(de.netsysit.util.ResourceLoader.getImgResource("de/elbosso/ressources/gfx/thirdparty/Gnome-colors-fusion-icon2_48.png")))
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				if(textMessageGeneratorPanel==null)
+				{
+					textMessageGeneratorPanel = new TextMessageGeneratorPanel();
+				}
+				if (gpocd == null)
+				{
+					gpocd = de.netsysit.ui.dialog.GeneralPurposeOkCancelDialog.create(QueueBrowserPanel.this, "Configure Filter");
+				}
+				gpocd.showDialog(textMessageGeneratorPanel);
+				if (gpocd.isCancelled() == false)
+				{
+					try
+					{
+						javax.jms.MessageProducer producer=session.createProducer(queue);
+						for(int i=0;i<((java.lang.Number)textMessageNumberSpinner.getModel().getValue()).intValue();++i)
+						{
+							TextMessage textMessage = textMessageGeneratorPanel.generate(session);
+							try
+							{
+								if (textMessageGeneratorPanel.getDeliveryDelayInMs() > 0)
+									producer.setDeliveryDelay(textMessageGeneratorPanel.getDeliveryDelayInMs());
+							} catch (java.lang.AbstractMethodError err)
+							{
+								CLASS_LOGGER.warn(err.getMessage(), err);
+							}
+							producer.setTimeToLive(textMessageGeneratorPanel.getTimeToLiveInMs());
+							producer.send(textMessage);
+						}
+					} catch (JMSException exp)
+					{
+						de.elbosso.util.Utilities.handleException(EXCEPTION_LOGGER,table,exp);
+					}
+					refresh();
+				}
+			}
+		};
 		configFilterAction=new javax.swing.AbstractAction(null,new javax.swing.ImageIcon(de.netsysit.util.ResourceLoader.getImgResource("toolbarButtonGraphics/general/Preferences24.gif")))
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+				if(queueBrowserConfigPanel==null)
+				{
+					queueBrowserConfigPanel = new QueueBrowserConfigPanel();
+				}
 				if (gpocd == null)
 				{
 					gpocd = de.netsysit.ui.dialog.GeneralPurposeOkCancelDialog.create(QueueBrowserPanel.this, "Configure Filter");
-					queueBrowserConfigPanel = new QueueBrowserConfigPanel();
 				}
 				gpocd.showDialog(queueBrowserConfigPanel);
 				if (gpocd.isCancelled() == false)
