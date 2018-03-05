@@ -200,7 +200,7 @@ public class QBrowser extends javax.swing.JFrame implements java.awt.event.Windo
 	}
 	public static void main(java.lang.String[] args)
 	{
-		de.elbosso.util.Utilities.configureBasicStdoutLogging(Level.ALL);
+		de.elbosso.util.Utilities.configureBasicStdoutLogging(Level.INFO);
 		new QBrowser();
 	}
 
