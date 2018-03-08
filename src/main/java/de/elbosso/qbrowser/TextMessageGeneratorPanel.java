@@ -9,6 +9,7 @@ import javax.jms.TextMessage;
 
 public class TextMessageGeneratorPanel extends javax.swing.JPanel
 {
+	private final static org.apache.log4j.Logger CLASS_LOGGER = org.apache.log4j.Logger.getLogger(TextMessageGeneratorPanel.class);
 	private MultiSequenceFacadeChoosePanel<String> multiSequenceFacadeChoosePanel;
 
 	TextMessageGeneratorPanel()
@@ -39,14 +40,16 @@ public class TextMessageGeneratorPanel extends javax.swing.JPanel
 
 	public long getTimeToLiveInMs()
 	{
-		java.lang.Object ref=multiSequenceFacadeChoosePanel.next("DeliveryDelay");
-		long rv=ref!=null?(((java.lang.Number)ref).longValue()):0;
+		java.lang.Object ref=multiSequenceFacadeChoosePanel.next("TimeToLive");
+		CLASS_LOGGER.debug("raw getTimeToLiveInMs "+ref);
+		long rv=ref!=null?(((java.lang.Number)ref).longValue()): Long.MAX_VALUE;
 		return rv;
 	}
 
 	public long getDeliveryDelayInMs()
 	{
-		java.lang.Object ref=multiSequenceFacadeChoosePanel.next("TimeToLive");
+		java.lang.Object ref=multiSequenceFacadeChoosePanel.next("DeliveryDelay");
+		CLASS_LOGGER.debug("raw getDeliveryDelayInMs "+ref);
 		long rv=ref!=null?(((java.lang.Number)ref).longValue()):0;
 		return rv;
 	}
