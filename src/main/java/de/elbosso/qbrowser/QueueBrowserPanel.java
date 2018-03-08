@@ -196,6 +196,7 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 							{
 								CLASS_LOGGER.warn(err.getMessage(), err);
 							}
+							CLASS_LOGGER.debug("setTimeToLive "+textMessageGeneratorPanel.getTimeToLiveInMs());
 							producer.setTimeToLive(textMessageGeneratorPanel.getTimeToLiveInMs());
 							producer.send(textMessage);
 						}
