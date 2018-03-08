@@ -236,17 +236,23 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 				int[] selectedIndices=table.getSelectedRows();
 				try
 				{
-					javax.jms.Queue q = session.createQueue(destinationName);
+					//javax.jms.Queue q = session.createQueue(destinationName);
 					for (int i : selectedIndices)
 					{
 						javax.jms.Message msg = model.getMessageAtRow(sorter.getUnsortedIndex(i));
 						if (CLASS_LOGGER.isDebugEnabled()) CLASS_LOGGER.debug("Deleting msg " + msg.getJMSMessageID());
-						javax.jms.MessageConsumer consumer = session.createConsumer(q, "JMSMessageID = '" + msg.getJMSMessageID() + "'");
+						javax.jms.MessageConsumer consumer = session.createConsumer(queue, "JMSMessageID = '" + msg.getJMSMessageID() + "'");
 						if (CLASS_LOGGER.isDebugEnabled())
 							CLASS_LOGGER.debug("selector = " + consumer.getMessageSelector());
-						javax.jms.Message message = consumer.receive(1000);
-						message.acknowledge();
-						consumer.close();
+						if(consumer!=null)
+						{
+							javax.jms.Message message = consumer.receive(1000);
+							if(message!=null)
+							{
+								message.acknowledge();
+							}
+							consumer.close();
+						}
 					}
 				}
 				catch(javax.jms.JMSException exp)
@@ -350,9 +356,9 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 			}
 			RuleSet ruleSet=ruleSetMap.get("Payload");
 			int n = model.load(qb.getEnumeration(),ruleSet!=null?ruleSet.getRules():null);
-			if(n== JMSMessageCollectionModel.MAXMESSAGESTOFETCH)
+			if(n== 100)
 			{
-				javax.swing.JOptionPane.showMessageDialog(QueueBrowserPanel.this,"More than "+JMSMessageCollectionModel.MAXMESSAGESTOFETCH+" messages available - consider using filters!");
+				javax.swing.JOptionPane.showMessageDialog(QueueBrowserPanel.this,"More than "+100+" messages available - consider using filters!");
 			}
 			qb.close();
 			boolean ascending=sorter.isAscending();

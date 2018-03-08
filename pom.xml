@@ -40,7 +40,11 @@ WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>2.5.1</version>
+                    <configuration>
+                      <source>9</source>
+                      <target>9</target>
+                      <compilerVersion>9</compilerVersion>    
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -180,11 +184,12 @@ WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
     <artifactId>javax.jms-api</artifactId>
     <version>2.0.1</version>
 </dependency>
-<!-- https://mvnrepository.com/artifact/org.apache.activemq/artemis-jms-client -->
+<!-- https://mvnrepository.com/artifact/org.apache.activemq/apache-artemis -->
 <dependency>
     <groupId>org.apache.activemq</groupId>
-    <artifactId>artemis-jms-client</artifactId>
-    <version>2.4.0</version>
+    <artifactId>apache-artemis</artifactId>
+    <version>1.5.5</version>
+    <type>pom</type>
 </dependency>
 <!-- https://mvnrepository.com/artifact/org.apache.activemq/activemq-client -->
 <dependency>
