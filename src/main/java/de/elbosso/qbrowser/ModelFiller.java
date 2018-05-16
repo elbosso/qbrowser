@@ -4,6 +4,7 @@ import de.elbosso.model.table.JMSMessageCollectionModel;
 import de.elbosso.util.validator.RuleSet;
 
 import javax.jms.JMSException;
+import java.util.Collections;
 import java.util.Enumeration;
 
 public class ModelFiller extends java.lang.Object implements Runnable
@@ -15,8 +16,11 @@ public class ModelFiller extends java.lang.Object implements Runnable
 	private final JMSMessageCollectionModel model;
 	private final javax.swing.JTable table;
 	private final javax.jms.QueueBrowser qb;
+	private final de.netsysit.model.table.TableSorter sorter;
+	private final boolean ascending;
+	private final int columnSortedBy;
 
-	ModelFiller(RuleSet ruleSet, javax.jms.QueueBrowser qb, JMSMessageCollectionModel model,javax.swing.JTable table) throws JMSException
+	ModelFiller(RuleSet ruleSet, javax.jms.QueueBrowser qb, JMSMessageCollectionModel model,javax.swing.JTable table,de.netsysit.model.table.TableSorter sorter) throws JMSException
 	{
 		super();
 		this.qb=qb;
@@ -24,6 +28,13 @@ public class ModelFiller extends java.lang.Object implements Runnable
 		this.model=model;
 		this.rules=ruleSet!=null?ruleSet.getRules():null;
 		this.table=table;
+		this.sorter=sorter;
+		ascending=sorter.isAscending();
+		columnSortedBy=sorter.getColumnSortedBy();
+		table.setEnabled(false);
+		table.setModel(model);
+		sorter.setModel(new de.elbosso.model.table.JMSMessageCollectionModel(Collections.EMPTY_LIST));
+		
 	}
 	public void run()
 	{
@@ -76,7 +87,10 @@ public class ModelFiller extends java.lang.Object implements Runnable
 		{
 			public void run()
 			{
-				table.setEnabled(false);
+				sorter.setModel(model);
+				sorter.sortByColumn(columnSortedBy,ascending);
+				table.setModel(sorter);
+				table.setEnabled(true);
 			}
 		});
 	}
