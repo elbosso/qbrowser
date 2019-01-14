@@ -291,7 +291,8 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 			String selector = queueBrowserConfigPanel!=null?queueBrowserConfigPanel.getMessgeSelector():null;
 			javax.jms.Queue q = session.createQueue(destinationName);
 			javax.jms.QueueBrowser qb;
-			model = new de.elbosso.model.table.JMSMessageCollectionModel(Collections.EMPTY_LIST);
+//			model = new de.elbosso.model.table.JMSMessageCollectionModel(Collections.EMPTY_LIST);
+			model.clear();
 			java.lang.StringBuffer buf=new java.lang.StringBuffer();
 			for(int i=0;i<model.getColumnCount();++i)
 			{
@@ -355,8 +356,10 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 				qb = session.createBrowser(q, selector);
 			}
 			RuleSet ruleSet=ruleSetMap.get("Payload");
-			int n = model.load(qb.getEnumeration(),ruleSet!=null?ruleSet.getRules():null);
-			if(n== 100)
+			java.lang.Runnable rble=new ModelFiller(ruleSet,qb,model,table);
+			table.setEnabled(false);
+/*			int n = model.load(qb.getEnumeration(),ruleSet!=null?ruleSet.getRules():null);
+			if(n>= 100)
 			{
 				javax.swing.JOptionPane.showMessageDialog(QueueBrowserPanel.this,"More than "+100+" messages available - consider using filters!");
 			}
@@ -369,6 +372,8 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 			table.getParent().validate();
 			table.getParent().doLayout();
 			table.getParent().repaint();
+*/
+			new java.lang.Thread(rble).start();
 		}
 		catch(javax.jms.JMSException e)
 		{
