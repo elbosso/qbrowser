@@ -35,6 +35,7 @@ import javax.jms.*;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class ConnectionPanel extends javax.swing.JPanel implements java.lang.AutoCloseable
 ,javax.swing.event.TreeSelectionListener
@@ -57,6 +58,12 @@ public class ConnectionPanel extends javax.swing.JPanel implements java.lang.Aut
 	private de.elbosso.util.pattern.command.RefreshAction refreshAction;
 	private javax.swing.JTabbedPane tabs;
 	private java.util.List<QueueBrowserPanel> queueBrowserPanels;
+	private javax.swing.Action deleteAction;
+	private javax.swing.JToggleButton deletetb;
+	private javax.swing.Action countAction;
+	private javax.swing.Popup popup;
+	private javax.swing.JLabel popupLabel;
+	private javax.swing.JProgressBar popupProgress;
 
 	public ConnectionPanel(javax.jms.Connection connection) throws javax.jms.JMSException
 	{
@@ -83,6 +90,11 @@ public class ConnectionPanel extends javax.swing.JPanel implements java.lang.Aut
 		toolbar.add(refreshAction);
 		toolbar.addSeparator();
 		toolbar.add(openQueueBrowserPanelAction);
+		toolbar.addSeparator();
+		toolbar.add(countAction);
+		toolbar.addSeparator();
+		deletetb=new javax.swing.JToggleButton(deleteAction);
+		toolbar.add(deletetb);
 		treePanel.add(toolbar, BorderLayout.NORTH);
 		treePanel.add(new javax.swing.JScrollPane(tree));
 		add(treePanel, BorderLayout.WEST);
@@ -128,6 +140,74 @@ public class ConnectionPanel extends javax.swing.JPanel implements java.lang.Aut
 		};
 		openQueueBrowserPanelAction.setEnabled(false);
 		refreshAction=new de.elbosso.util.pattern.command.RefreshAction(this);
+		deleteAction=new javax.swing.AbstractAction(null,new javax.swing.ImageIcon(de.netsysit.util.ResourceLoader.getImgResource("toolbarButtonGraphics/general/Delete24.gif")))
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				if(((java.lang.Boolean)deleteAction.getValue(javax.swing.Action.SELECTED_KEY)).booleanValue()==true)
+					new CleanMessagesFromQueueThread().start();
+			}
+		};
+		deleteAction.putValue(javax.swing.Action.SELECTED_KEY, java.lang.Boolean.FALSE);
+		deleteAction.setEnabled(false);
+		countAction=new javax.swing.AbstractAction(null,new javax.swing.ImageIcon(de.netsysit.util.ResourceLoader.getImgResource("action/drawable-mdpi/ic_info_black_48dp.png")))
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				long counter=0;
+				javax.swing.tree.TreePath[] paths=tree.getSelectionPaths();
+				if(paths!=null)
+				{
+					if(paths.length>0)
+					{
+						if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(paths[paths.length - 1].getLastPathComponent());
+						if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(paths[paths.length - 1].getLastPathComponent().getClass());
+						if(javax.swing.tree.DefaultMutableTreeNode.class.isAssignableFrom(paths[paths.length - 1].getLastPathComponent().getClass()))
+						{
+							javax.swing.tree.DefaultMutableTreeNode dmtn=(javax.swing.tree.DefaultMutableTreeNode)paths[paths.length - 1].getLastPathComponent();
+							try
+							{
+								java.lang.String  destinationName=ConnectionPanelSupport.getDestinationName(dmtn,ConnectionPanel.this);
+								if(destinationName!=null)
+								{
+									javax.jms.Queue queue = session.createQueue(destinationName);
+									javax.jms.QueueBrowser qb = session.createBrowser(queue);
+									java.util.Enumeration en = qb.getEnumeration();
+							    while (en.hasMoreElements())
+							    {
+										try
+										{
+											javax.jms.Message msg = (javax.jms.Message) en.nextElement();
+											if (CLASS_LOGGER.isDebugEnabled()) CLASS_LOGGER.debug("Deleting msg " + msg.getJMSMessageID());
+//											System.out.println("Deleting msg " + msg.getJMSMessageID());
+											++counter;
+											if(counter%10000==0)
+											{
+												if (CLASS_LOGGER.isDebugEnabled())
+													CLASS_LOGGER.debug("counting # "+(counter));
+												System.out.println("counting # "+(counter));
+											}
+										}
+										catch(javax.jms.JMSException exp)
+										{
+											de.elbosso.util.Utilities.handleException(EXCEPTION_LOGGER,tree,exp);
+										}
+							    }
+								}
+							}
+							catch(javax.jms.JMSException exp)
+							{
+								de.elbosso.util.Utilities.handleException(EXCEPTION_LOGGER,tree,exp);
+							}
+						}
+					}
+				}
+				javax.swing.JOptionPane.showMessageDialog(tree, "At least "+counter+" in queue", "Count Messages", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+			}
+		};
+		countAction.setEnabled(false);
 	}
 	@Override
 	public void close() throws Exception
@@ -135,7 +215,121 @@ public class ConnectionPanel extends javax.swing.JPanel implements java.lang.Aut
 		session.close();
 		connection.close();
 	}
-
+	private class CleanMessagesFromQueueThread extends java.lang.Thread
+	{
+		public void run()
+		{
+			long counter=0;
+			javax.swing.tree.TreePath[] paths=tree.getSelectionPaths();
+			if(paths!=null)
+			{
+				if(paths.length>0)
+				{
+					if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(paths[paths.length - 1].getLastPathComponent());
+					if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(paths[paths.length - 1].getLastPathComponent().getClass());
+					if(javax.swing.tree.DefaultMutableTreeNode.class.isAssignableFrom(paths[paths.length - 1].getLastPathComponent().getClass()))
+					{
+						javax.swing.tree.DefaultMutableTreeNode dmtn=(javax.swing.tree.DefaultMutableTreeNode)paths[paths.length - 1].getLastPathComponent();
+						try
+						{
+							java.lang.String  destinationName=ConnectionPanelSupport.getDestinationName(dmtn,ConnectionPanel.this);
+							if(destinationName!=null)
+							{
+								javax.jms.Queue queue = session.createQueue(destinationName);
+								javax.jms.QueueBrowser qb = session.createBrowser(queue);
+								java.util.Enumeration en = qb.getEnumeration();
+								javax.swing.SwingUtilities.invokeLater(new java.lang.Runnable()
+								{
+									@Override
+									public void run()
+									{
+										javax.swing.PopupFactory pf = new javax.swing.PopupFactory(); 
+										javax.swing.JPanel p2 = new javax.swing.JPanel(); 
+//											popupLabel=new javax.swing.JLabel();
+//											popupLabel.setPreferredSize(new java.awt.Dimension(400, 30));
+//							        p2.add(popupLabel);
+										popupProgress=new javax.swing.JProgressBar();
+										popupProgress.setIndeterminate(true);
+										popupProgress.setStringPainted(true);
+										popupProgress.setPreferredSize(new java.awt.Dimension(400, 55));
+										popupProgress.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Deletion in Progress..."));
+						        p2.add(popupProgress);
+						        popup=pf.getPopup(tree, p2, 180, 40); 
+//										popupLabel.setText("");
+										popupProgress.setString("");
+						        popup.show(); 
+									}
+								});
+						    while ((en.hasMoreElements())&&((java.lang.Boolean)deleteAction.getValue(javax.swing.Action.SELECTED_KEY)).booleanValue()==true) 
+						    {
+									try
+									{
+										javax.jms.Message msg = (javax.jms.Message) en.nextElement();
+										if (CLASS_LOGGER.isDebugEnabled()) CLASS_LOGGER.debug("Deleting msg " + msg.getJMSMessageID());
+//										System.out.println("Deleting msg " + msg.getJMSMessageID());
+										javax.jms.MessageConsumer consumer = session.createConsumer(queue, "JMSMessageID = '" + msg.getJMSMessageID() + "'");
+										if(consumer!=null)
+										{
+//										System.out.println(consumer);
+											if (CLASS_LOGGER.isDebugEnabled())
+												CLASS_LOGGER.debug("selector = " + consumer.getMessageSelector());
+//										System.out.println("selector = " + consumer.getMessageSelector());
+											javax.jms.Message message = consumer.receive(1000);
+											++counter;
+											if(counter%1000==0)
+											{
+												if (CLASS_LOGGER.isDebugEnabled())
+													CLASS_LOGGER.debug("deleting # "+(counter)+": "+ message);
+//												System.out.println("deleting # "+(counter)+": "+message);
+												javax.swing.SwingUtilities.invokeLater(new Updater(counter));
+											}
+											if(message!=null)
+											{
+												message.acknowledge();
+											}
+											consumer.close();
+										}
+									}
+									catch(javax.jms.JMSException exp)
+									{
+										de.elbosso.util.Utilities.handleException(EXCEPTION_LOGGER,tree,exp);
+									}
+						    }
+								javax.swing.SwingUtilities.invokeLater(new java.lang.Runnable()
+								{
+									@Override
+									public void run()
+									{
+										popup.hide();
+									}
+								});
+							}
+						}
+						catch(javax.jms.JMSException exp)
+						{
+							de.elbosso.util.Utilities.handleException(EXCEPTION_LOGGER,tree,exp);
+						}
+					}
+				}
+			}
+		}
+	}
+	private class Updater extends java.lang.Object implements java.lang.Runnable
+	{
+		private final long counter;
+		
+		Updater(long counter)
+		{
+			super();
+			this.counter=counter;
+		}
+		@Override
+		public void run()
+		{
+//			popupLabel.setText("deleting # "+(counter));
+			popupProgress.setString("deleting # "+(counter));
+		}
+	}
 	@Override
 	public void valueChanged(TreeSelectionEvent e)
 	{
@@ -162,6 +356,8 @@ public class ConnectionPanel extends javax.swing.JPanel implements java.lang.Aut
 			}
 		}
 		openQueueBrowserPanelAction.setEnabled(tree.isEnabled()&&enabled);
+		deleteAction.setEnabled(tree.isEnabled()&&enabled);
+		countAction.setEnabled(tree.isEnabled()&&enabled);
 	}
 
 	@Override
