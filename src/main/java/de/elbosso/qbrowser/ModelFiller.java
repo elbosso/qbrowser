@@ -1,9 +1,40 @@
 package de.elbosso.qbrowser;
+/*
+Copyright (c) 2012-2018.
+Juergen Key. Alle Rechte vorbehalten.
+Weiterverbreitung und Verwendung in nichtkompilierter oder kompilierter Form,
+mit oder ohne Veraenderung, sind unter den folgenden Bedingungen zulaessig:
+   1. Weiterverbreitete nichtkompilierte Exemplare muessen das obige Copyright,
+die Liste der Bedingungen und den folgenden Haftungsausschluss im Quelltext
+enthalten.
+   2. Weiterverbreitete kompilierte Exemplare muessen das obige Copyright,
+die Liste der Bedingungen und den folgenden Haftungsausschluss in der
+Dokumentation und/oder anderen Materialien, die mit dem Exemplar verbreitet
+werden, enthalten.
+   3. Weder der Name des Autors noch die Namen der Beitragsleistenden
+duerfen zum Kennzeichnen oder Bewerben von Produkten, die von dieser Software
+abgeleitet wurden, ohne spezielle vorherige schriftliche Genehmigung verwendet
+werden.
+DIESE SOFTWARE WIRD VOM AUTOR UND DEN BEITRAGSLEISTENDEN OHNE
+JEGLICHE SPEZIELLE ODER IMPLIZIERTE GARANTIEN ZUR VERFUEGUNG GESTELLT, DIE
+UNTER ANDEREM EINSCHLIESSEN: DIE IMPLIZIERTE GARANTIE DER VERWENDBARKEIT DER
+SOFTWARE FUER EINEN BESTIMMTEN ZWECK. AUF KEINEN FALL IST DER AUTOR
+ODER DIE BEITRAGSLEISTENDEN FUER IRGENDWELCHE DIREKTEN, INDIREKTEN,
+ZUFAELLIGEN, SPEZIELLEN, BEISPIELHAFTEN ODER FOLGENDEN SCHAEDEN (UNTER ANDEREM
+VERSCHAFFEN VON ERSATZGUETERN ODER -DIENSTLEISTUNGEN; EINSCHRAENKUNG DER
+NUTZUNGSFAEHIGKEIT; VERLUST VON NUTZUNGSFAEHIGKEIT; DATEN; PROFIT ODER
+GESCHAEFTSUNTERBRECHUNG), WIE AUCH IMMER VERURSACHT UND UNTER WELCHER
+VERPFLICHTUNG AUCH IMMER, OB IN VERTRAG, STRIKTER VERPFLICHTUNG ODER
+UNERLAUBTE HANDLUNG (INKLUSIVE FAHRLAESSIGKEIT) VERANTWORTLICH, AUF WELCHEM
+WEG SIE AUCH IMMER DURCH DIE BENUTZUNG DIESER SOFTWARE ENTSTANDEN SIND, SOGAR,
+WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
+ */
 
 import de.elbosso.model.table.JMSMessageCollectionModel;
 import de.elbosso.util.validator.RuleSet;
 
 import javax.jms.JMSException;
+import java.util.Collections;
 import java.util.Enumeration;
 
 public class ModelFiller extends java.lang.Object implements Runnable
@@ -15,8 +46,11 @@ public class ModelFiller extends java.lang.Object implements Runnable
 	private final JMSMessageCollectionModel model;
 	private final javax.swing.JTable table;
 	private final javax.jms.QueueBrowser qb;
+	private final de.netsysit.model.table.TableSorter sorter;
+	private final boolean ascending;
+	private final int columnSortedBy;
 
-	ModelFiller(RuleSet ruleSet, javax.jms.QueueBrowser qb, JMSMessageCollectionModel model,javax.swing.JTable table) throws JMSException
+	ModelFiller(RuleSet ruleSet, javax.jms.QueueBrowser qb, JMSMessageCollectionModel model,javax.swing.JTable table,de.netsysit.model.table.TableSorter sorter) throws JMSException
 	{
 		super();
 		this.qb=qb;
@@ -24,6 +58,13 @@ public class ModelFiller extends java.lang.Object implements Runnable
 		this.model=model;
 		this.rules=ruleSet!=null?ruleSet.getRules():null;
 		this.table=table;
+		this.sorter=sorter;
+		ascending=sorter.isAscending();
+		columnSortedBy=sorter.getColumnSortedBy();
+		table.setEnabled(false);
+		table.setModel(model);
+		sorter.setModel(new de.elbosso.model.table.JMSMessageCollectionModel(Collections.EMPTY_LIST));
+
 	}
 	public void run()
 	{
@@ -76,7 +117,10 @@ public class ModelFiller extends java.lang.Object implements Runnable
 		{
 			public void run()
 			{
-				table.setEnabled(false);
+				sorter.setModel(model);
+				sorter.sortByColumn(columnSortedBy,ascending);
+				table.setModel(sorter);
+				table.setEnabled(true);
 			}
 		});
 	}

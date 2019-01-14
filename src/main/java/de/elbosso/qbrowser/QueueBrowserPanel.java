@@ -367,7 +367,7 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 				qb = session.createBrowser(q, selector);
 			}
 			RuleSet ruleSet=ruleSetMap.get("Payload");
-			java.lang.Runnable rble=new ModelFiller(ruleSet,qb,model,table);
+			java.lang.Runnable rble=new ModelFiller(ruleSet,qb,model,table,sorter);
 			table.setEnabled(false);
 /*			int n = model.load(qb.getEnumeration(),ruleSet!=null?ruleSet.getRules():null);
 			if(n>= 100)
@@ -385,6 +385,7 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 			table.getParent().doLayout();
 			table.getParent().repaint();
 */
+//rble.run();
 			new java.lang.Thread(rble).start();
 		}
 		catch(javax.jms.JMSException e)
