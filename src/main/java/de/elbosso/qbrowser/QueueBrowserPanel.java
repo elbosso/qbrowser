@@ -72,6 +72,7 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 	private java.util.Map<java.lang.String,RuleSet> ruleSetMap;
 	private java.util.Map<java.lang.Class,JMSMessageSelectorFormat[]> class2MsgSelMap;
 	private javax.jms.Queue queue;
+	boolean beQuietWhenRefreshing=false;
 
 	public QueueBrowserPanel(javax.jms.Session session,java.lang.String destinationName) throws javax.jms.JMSException
 	{
@@ -204,7 +205,9 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 					{
 						de.elbosso.util.Utilities.handleException(EXCEPTION_LOGGER,table,exp);
 					}
+					beQuietWhenRefreshing=true;
 					refresh();
+					beQuietWhenRefreshing=false;
 				}
 			}
 		};
@@ -241,12 +244,18 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 					{
 						javax.jms.Message msg = model.getMessageAtRow(sorter.getUnsortedIndex(i));
 						if (CLASS_LOGGER.isDebugEnabled()) CLASS_LOGGER.debug("Deleting msg " + msg.getJMSMessageID());
+//						System.out.println("Deleting msg " + msg.getJMSMessageID());
 						javax.jms.MessageConsumer consumer = session.createConsumer(queue, "JMSMessageID = '" + msg.getJMSMessageID() + "'");
-						if (CLASS_LOGGER.isDebugEnabled())
-							CLASS_LOGGER.debug("selector = " + consumer.getMessageSelector());
 						if(consumer!=null)
 						{
+//						System.out.println(consumer);
+							if (CLASS_LOGGER.isDebugEnabled())
+								CLASS_LOGGER.debug("selector = " + consumer.getMessageSelector());
+//						System.out.println("selector = " + consumer.getMessageSelector());
 							javax.jms.Message message = consumer.receive(1000);
+							if (CLASS_LOGGER.isDebugEnabled())
+								CLASS_LOGGER.debug("message = " + message);
+//							System.out.println(message);
 							if(message!=null)
 							{
 								message.acknowledge();
@@ -259,7 +268,9 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 				{
 					de.elbosso.util.Utilities.handleException(EXCEPTION_LOGGER,table,exp);
 				}
-				de.elbosso.util.Utilities.performAction(QueueBrowserPanel.this,refreshAction);
+				beQuietWhenRefreshing=true;
+				refresh();
+				beQuietWhenRefreshing=false;
 			}
 		};
 		deleteAction.setEnabled(false);
@@ -355,10 +366,13 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 				qb = session.createBrowser(q, selector);
 			}
 			RuleSet ruleSet=ruleSetMap.get("Payload");
-			int n = model.load(qb.getEnumeration(),ruleSet!=null?ruleSet.getRules():null);
-			if(n== 100)
+			java.lang.Runnable rble=new ModelFiller(ruleSet,qb,model,table);
+			table.setEnabled(false);
+/*			int n = model.load(qb.getEnumeration(),ruleSet!=null?ruleSet.getRules():null);
+			if(n>= 100)
 			{
-				javax.swing.JOptionPane.showMessageDialog(QueueBrowserPanel.this,"More than "+100+" messages available - consider using filters!");
+				if(beQuietWhenRefreshing==false)
+					javax.swing.JOptionPane.showMessageDialog(QueueBrowserPanel.this,"More than "+JMSMessageCollectionModel.MAXMESSAGESTOFETCH+" messages available - consider using filters!");
 			}
 			qb.close();
 			boolean ascending=sorter.isAscending();
@@ -369,6 +383,8 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 			table.getParent().validate();
 			table.getParent().doLayout();
 			table.getParent().repaint();
+*/
+			new java.lang.Thread(rble).start();
 		}
 		catch(javax.jms.JMSException e)
 		{
