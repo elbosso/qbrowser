@@ -302,7 +302,8 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 			String selector = queueBrowserConfigPanel!=null?queueBrowserConfigPanel.getMessgeSelector():null;
 			javax.jms.Queue q = session.createQueue(destinationName);
 			javax.jms.QueueBrowser qb;
-			model = new de.elbosso.model.table.JMSMessageCollectionModel(Collections.EMPTY_LIST);
+//			model = new de.elbosso.model.table.JMSMessageCollectionModel(Collections.EMPTY_LIST);
+			model.clear();
 			java.lang.StringBuffer buf=new java.lang.StringBuffer();
 			for(int i=0;i<model.getColumnCount();++i)
 			{
