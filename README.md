@@ -11,6 +11,7 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/elbosso/qbrowser/issues)
 [![GitHub contributors](https://img.shields.io/github/contributors/elbosso/qbrowser.svg)](https://GitHub.com/elbosso/qbrowser/graphs/contributors/)
 [![Github All Releases](https://img.shields.io/github/downloads/elbosso/qbrowser/total.svg)](https://github.com/elbosso/qbrowser)
+[![Website elbosso.github.io](https://img.shields.io/website-up-down-green-red/https/elbosso.github.io.svg)](https://elbosso.github.io/)
 
 ## Build
 mvn -U package assembly:single

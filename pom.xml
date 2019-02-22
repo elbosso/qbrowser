@@ -195,7 +195,7 @@ WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
 <dependency>
     <groupId>org.apache.activemq</groupId>
     <artifactId>activemq-client</artifactId>
-    <version>5.15.2</version>
+    <version>[5.15.6,)</version>
 </dependency>
 
 
