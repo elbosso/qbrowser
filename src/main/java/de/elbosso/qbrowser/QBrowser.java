@@ -194,7 +194,7 @@ public class QBrowser extends javax.swing.JFrame implements java.awt.event.Windo
 				}
 				catch(java.lang.Throwable t)
 				{
-					de.netsysit.util.Utilities.handleException(EXCEPTION_LOGGER,t);
+					de.elbosso.util.Utilities.handleException(EXCEPTION_LOGGER,t);
 				}
 			}
 		};
