@@ -44,7 +44,7 @@ public class MessageDetailPanel extends javax.swing.JPanel implements java.awt.e
 	private de.netsysit.ui.text.TextEditor textEditor;
 	private javax.swing.JComboBox documentsComboBox;
 	private final static java.lang.Object[] supportedDocumentTypes=new java.lang.Object[]{
-			new de.netsysit.documents.SyntaxDocument(),
+			new org.syntax.jedit.SyntaxDocument(),
 			new de.netsysit.documents.XMLSyntaxDocument(),
 			new de.netsysit.documents.HTMLSyntaxDocument(),
 			new de.netsysit.documents.JavaSyntaxDocument(),
