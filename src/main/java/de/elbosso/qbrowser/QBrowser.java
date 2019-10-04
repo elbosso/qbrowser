@@ -57,80 +57,6 @@ public class QBrowser extends javax.swing.JFrame implements java.awt.event.Windo
 	private javax.swing.JTabbedPane tabs;
 	private java.util.List<ConnectionPanel> connectionPanels;
 
-	static{
-		try
-		{
-			java.awt.image.BufferedImage bi=de.netsysit.ui.image.DecoratedImageProducer.produceImage(de.netsysit.util.ResourceLoader.getImgResource("device/drawable-mdpi/ic_sd_storage_black_48dp.png"), de.netsysit.util.ResourceLoader.getImgResource("action/drawable-mdpi/ic_help_outline_black_36dp.png"));
-			java.io.File f=java.io.File.createTempFile("SaveAs",".png");
-			f.deleteOnExit();
-			javax.imageio.ImageIO.write(bi,"png",f);
-
-			java.util.Properties iconFallbacks = new java.util.Properties();
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Save24.gif", "device/drawable-mdpi/ic_sd_storage_black_48dp.png");
-//			iconFallbacks.setProperty("toolbarButtonGraphics/general/SaveAs24.gif", "toolbarButtonGraphics/general/Save24.gif&action/drawable-mdpi/ic_help_outline_black_36dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/SaveAs24.gif", "#"+(f.toURI().toURL().toString()));
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/SaveAs24.gif", "toolbarButtonGraphics/general/Save24.gif&action/drawable-mdpi/ic_help_outline_black_36dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Delete16.gif", "action/drawable-mdpi/ic_delete_black_36dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Delete24.gif", "action/drawable-mdpi/ic_delete_black_48dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Cut24.gif", "content/drawable-mdpi/ic_content_cut_black_48dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Copy24.gif", "content/drawable-mdpi/ic_content_copy_black_48dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Paste24.gif", "content/drawable-mdpi/ic_content_paste_black_48dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Bookmarks24.gif", "action/drawable-mdpi/ic_bookmark_border_black_48dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Find24.gif", "action/drawable-mdpi/ic_search_black_48dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/common/HighlightSelection24.gif", "content/drawable-mdpi/ic_select_all_black_48dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/media/Pause24.gif", "av/drawable-mdpi/ic_pause_circle_outline_black_48dp.png");
-//			iconFallbacks.setProperty("toolbarButtonGraphics/media/Pause24.gif", "av/drawable-mdpi/ic_pause_black_48dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/navigation/Down24.gif", "navigation/drawable-mdpi/ic_arrow_downward_black_48dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/navigation/Up24.gif", "navigation/drawable-mdpi/ic_arrow_upward_black_48dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Preferences24.gif","image/drawable-mdpi/ic_tune_black_48dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/navigation/Up16.gif","navigation/drawable-mdpi/ic_arrow_upward_black_24dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/navigation/Down16.gif","navigation/drawable-mdpi/ic_arrow_downward_black_24dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Add24.gif","content/drawable-mdpi/ic_add_box_black_48dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Remove24.gif","action/drawable-mdpi/ic_delete_black_48dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Edit24.gif","editor/drawable-mdpi/ic_border_color_black_48dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/common/Color24.gif","editor/drawable-mdpi/ic_format_color_fill_black_48dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/common/Proceed16.gif","navigation/drawable-mdpi/ic_check_black_24dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/common/Cancel16.gif","navigation/drawable-mdpi/ic_cancel_black_24dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/verbindung_herstellen3_48.png","action/drawable-mdpi/ic_power_settings_new_black_48dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/common/Proceed16.gif","navigation/drawable-mdpi/ic_check_black_24dp.png");
-//			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/button_x_32.png","navigation/drawable-mdpi/ic_cancel_black_24dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Refresh24.gif","av/drawable-mdpi/ic_replay_black_48dp.png");
-			iconFallbacks.setProperty("toolbarButtonGraphics/general/Replace24.gif","action/drawable-mdpi/ic_find_replace_black_48dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/common/ReplaceAll24.gif","action/drawable-mdpi/ic_find_replace_black_48dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/Template editieren_48.png","toggle/drawable-mdpi/ic_radio_button_unchecked_black_24dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/neu_48.png","toggle/drawable-mdpi/ic_radio_button_unchecked_black_24dp.png");
-			iconFallbacks.setProperty("de/elbosso/ressources/gfx/eb/xmlclosingelement_48.png","toggle/drawable-mdpi/ic_radio_button_unchecked_black_24dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/ohne_proxy_starten_48.png","toggle/drawable-mdpi/ic_radio_button_unchecked_black_24dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/java_48.png","toggle/drawable-mdpi/ic_radio_button_unchecked_black_24dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/datenbanktabelle_48.png","toggle/drawable-mdpi/ic_radio_button_unchecked_black_24dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/Template editieren_48.png","toggle/drawable-mdpi/ic_radio_button_unchecked_black_24dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/common/ExpandAll24.gif","de/elbosso/ressources/gfx/eb/material/expand_48.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/common/CollapseAll24.gif","de/elbosso/ressources/gfx/eb/material/collapse_48.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/common/ExpandSelected24.gif","de/elbosso/ressources/gfx/eb/material/expand_selected_48.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/common/CollapseSelected24.gif","de/elbosso/ressources/gfx/eb/material/collapse_selected_48.png");
-			iconFallbacks.setProperty("de/elbosso/ressources/gfx/eb/queues/queue_new_48.png","action/drawable-mdpi/ic_open_in_new_black_48dp.png");
-			iconFallbacks.setProperty("de/elbosso/ressources/gfx/tango/Mail-message_48.png","communication/drawable-mdpi/ic_contact_mail_black_48dp.png");
-//			iconFallbacks.setProperty("de/elbosso/ressources/gfx/tango/Mail-message_48.png","communication/drawable-mdpi/ic_mail_outline_black_48dp.png");
-//			iconFallbacks.setProperty("de/elbosso/ressources/gfx/tango/Mail-message_48.png","content/drawable-mdpi/ic_mail_black_48dp.png");
-//			iconFallbacks.setProperty("de/elbosso/ressources/gfx/tango/Mail-message_48.png","content/drawable-mdpi/ic_drafts_black_48dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/question_48.png","action/drawable-mdpi/ic_help_black_48dp.png");
-/*			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/error_48.png","content/drawable-mdpi/ic_report_black_48dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/warning_48.png","content/drawable-mdpi/ic_block_black_48dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/info_48.png","action/drawable-mdpi/ic_info_black_48dp.png");
-*/			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/plain_48.png","action/drawable-mdpi/ic_stars_black_48dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/error_48.png","social/drawable-mdpi/ic_sentiment_very_dissatisfied_black_48dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/warning_48.png","social/drawable-mdpi/ic_sentiment_dissatisfied_black_48dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/info_48.png","social/drawable-mdpi/ic_sentiment_neutral_black_48dp.png");
-			iconFallbacks.setProperty("de/netsysit/ressources/gfx/ca/info_48.png","social/drawable-mdpi/ic_sentiment_neutral_black_48dp.png");
-			iconFallbacks.setProperty("de/elbosso/ressources/gfx/thirdparty/Gnome-colors-fusion-icon2_48.png","social/drawable-mdpi/ic_plus_one_black_48dp.png");
-			de.netsysit.util.ResourceLoader.configure(iconFallbacks);
-		}
-		catch(java.io.IOException ioexp)
-		{
-			ioexp.printStackTrace();
-		}
-	}
-
 	public QBrowser()
 	{
 		super("QBrowser");
@@ -201,6 +127,20 @@ public class QBrowser extends javax.swing.JFrame implements java.awt.event.Windo
 	}
 	public static void main(java.lang.String[] args)
 	{
+		try
+		{
+			java.util.Properties iconFallbacks = new java.util.Properties();
+			java.io.InputStream is=de.netsysit.util.ResourceLoader.getResource("de/elbosso/ressources/data/icon_trans_material.properties").openStream();
+			iconFallbacks.load(is);
+			is.close();
+			de.netsysit.util.ResourceLoader.configure(iconFallbacks);
+		}
+		catch(java.io.IOException ioexp)
+		{
+			ioexp.printStackTrace();
+		}
+
+		de.netsysit.util.ResourceLoader.setSize(de.netsysit.util.ResourceLoader.IconSize.small);
 		de.elbosso.util.Utilities.configureBasicStdoutLogging(Level.INFO);
 		new QBrowser();
 	}
