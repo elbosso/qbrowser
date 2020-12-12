@@ -45,7 +45,7 @@ WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
                     <artifactId>maven-release-plugin</artifactId>
                     <version>3.0.0-M1</version>
                     <configuration>
-                        <!--preparationGoals>package assembly:single</preparationGoals-->
+                        <preparationGoals>package assembly:single</preparationGoals>
                     </configuration>
                 </plugin>
                 <plugin>
