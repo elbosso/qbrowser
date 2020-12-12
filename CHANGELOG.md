@@ -3,6 +3,25 @@
 Changelog of Git Changelog Maven plugin.
 
 ## Unreleased
+### No issue
+
+**maven central completely blocks http now**
+
+
+[279e5a9aaabaa03](https://github.com/elbosso/qbrowser/commit/279e5a9aaabaa03) Jürgen Key *2020-01-24 17:41:56*
+
+**custom material icons now in use**
+
+
+[be51a3d67581ab6](https://github.com/elbosso/qbrowser/commit/be51a3d67581ab6) Juergen Key *2019-10-04 06:14:35*
+
+**added changelog**
+
+
+[6a500b2ca016178](https://github.com/elbosso/qbrowser/commit/6a500b2ca016178) Juergen Key *2019-08-25 13:05:14*
+
+
+## refs/tags/1.0.1
 ### GitHub [#1](https://github.com/elbosso/qbrowser/issues/1) Update MessageTableModel in QBrowser in background
 
 **fixes #1**

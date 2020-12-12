@@ -34,16 +34,25 @@ WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
   <groupId>de.elbosso</groupId>
   <artifactId>QBrowser</artifactId>
   <version>0.1.0-SNAPSHOT</version>
+    <scm>
+        <developerConnection>scm:git:https://github.com/elbosso/qbrowser.git</developerConnection>
+    </scm>
   <build>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                    <configuration>
+                        <!--preparationGoals>package assembly:single</preparationGoals-->
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
-                      <source>9</source>
-                      <target>9</target>
-                      <compilerVersion>9</compilerVersion>    
+                        <compilerVersion>11</compilerVersion>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -73,6 +82,31 @@ WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
             </plugins>
         </pluginManagement>
       <plugins>
+          <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>exec-maven-plugin</artifactId>
+              <version>1.2.1</version>
+              <executions>
+                  <execution>
+                      <goals>
+                          <goal>java</goal>
+                      </goals>
+                  </execution>
+              </executions>
+              <configuration>
+                  <mainClass>de.elbosso.qbrowser.QBrowser</mainClass>
+                  <!--arguments>
+                      <argument>foo</argument>
+                      <argument>bar</argument>
+                  </arguments-->
+                  <!--systemProperties>
+                      <systemProperty>
+                          <key>java.awt.headless</key>
+                          <value>true</value>
+                      </systemProperty>
+                  </systemProperties-->
+              </configuration>
+          </plugin>
           <!-- https://github.com/tomasbjerre/git-changelog-maven-plugin/blob/master/git-changelog-maven-plugin-example/pom.xml -->
           <plugin>
               <groupId>se.bjurr.gitchangelog</groupId>
@@ -103,6 +137,7 @@ WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
         <project.build.sourceEncoding>${project.custom.encoding}</project.build.sourceEncoding>
         <project.build.outputEncoding>${project.custom.encoding}</project.build.outputEncoding>
         <project.reporting.outputEncoding>${project.custom.encoding}</project.reporting.outputEncoding>
+        <project.scm.id>elbossos-github</project.scm.id>
     </properties>
     <repositories>
         <repository>
@@ -234,4 +269,11 @@ WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
 
 
     </dependencies>
+    <distributionManagement>
+        <repository>
+            <id>internal.repo</id>
+            <name>Internal repo</name>
+            <url>file:///tmp/</url>
+        </repository>
+    </distributionManagement>
 </project>
