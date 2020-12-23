@@ -5,6 +5,16 @@ Changelog of Git Changelog Maven plugin.
 ## Unreleased
 ### No issue
 
+**preparation of automated maven release management**
+
+
+[1411c9c9ff3266c](https://github.com/elbosso/qbrowser/commit/1411c9c9ff3266c) Juergen Key *2020-12-12 07:19:29*
+
+**preparation of automated maven release management**
+
+
+[b810a41ecd0174c](https://github.com/elbosso/qbrowser/commit/b810a41ecd0174c) Juergen Key *2020-12-12 07:13:14*
+
 **maven central completely blocks http now**
 
 
