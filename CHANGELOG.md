@@ -5,6 +5,16 @@ Changelog of Git Changelog Maven plugin.
 ## Unreleased
 ### No issue
 
+**automated maven release management**
+
+
+[1a83bbd47829fff](https://github.com/elbosso/qbrowser/commit/1a83bbd47829fff) Juergen Key *2020-12-23 12:01:37*
+
+**automated maven release management**
+
+
+[578109aa79b8876](https://github.com/elbosso/qbrowser/commit/578109aa79b8876) Juergen Key *2020-12-23 12:01:03*
+
 **preparation of automated maven release management**
 
 
