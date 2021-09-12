@@ -5,6 +5,15 @@ Changelog of Git Changelog Maven plugin.
 ## Unreleased
 ### No issue
 
+**repository locations fixed**
+
+
+[adb5f86a3f40142](https://github.com/elbosso/qbrowser/commit/adb5f86a3f40142) Juergen Key *2021-03-07 07:28:54*
+
+
+## 1.0.0
+### No issue
+
 **automated maven release management**
 
 
