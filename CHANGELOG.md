@@ -5,6 +5,11 @@ Changelog of Git Changelog Maven plugin.
 ## Unreleased
 ### No issue
 
+**change of repository location for de.elbosso artifacts**
+
+
+[173b4f46c204ebd](https://github.com/elbosso/qbrowser/commit/173b4f46c204ebd) Juergen Key *2021-09-12 15:28:23*
+
 **repository locations fixed**
 
 
