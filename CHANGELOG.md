@@ -5,6 +5,11 @@ Changelog of Git Changelog Maven plugin.
 ## Unreleased
 ### No issue
 
+**icon sizing issues**
+
+
+[b7ed5b964293900](https://github.com/elbosso/qbrowser/commit/b7ed5b964293900) Juergen Key *2022-01-03 16:32:50*
+
 **change of repository location for de.elbosso artifacts**
 
 
