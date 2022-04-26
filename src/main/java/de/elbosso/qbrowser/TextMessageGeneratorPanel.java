@@ -9,7 +9,7 @@ import javax.jms.TextMessage;
 
 public class TextMessageGeneratorPanel extends javax.swing.JPanel
 {
-	private final static org.apache.log4j.Logger CLASS_LOGGER = org.apache.log4j.Logger.getLogger(TextMessageGeneratorPanel.class);
+	private final static org.slf4j.Logger CLASS_LOGGER = org.slf4j.LoggerFactory.getLogger(TextMessageGeneratorPanel.class);
 	private MultiSequenceFacadeChoosePanel<String> multiSequenceFacadeChoosePanel;
 
 	TextMessageGeneratorPanel()

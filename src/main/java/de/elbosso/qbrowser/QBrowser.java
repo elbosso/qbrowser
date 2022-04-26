@@ -33,7 +33,7 @@ UNERLAUBTE HANDLUNG (INKLUSIVE FAHRLAESSIGKEIT) VERANTWORTLICH, AUF WELCHEM
 WEG SIE AUCH IMMER DURCH DIE BENUTZUNG DIESER SOFTWARE ENTSTANDEN SIND, SOGAR,
 WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
  */
-import org.apache.log4j.Level;
+import ch.qos.logback.classic.Level;
 
 import javax.naming.Context;
 import javax.naming.NameClassPair;
@@ -46,8 +46,8 @@ import java.util.Hashtable;
 
 public class QBrowser extends javax.swing.JFrame implements java.awt.event.WindowListener
 {
-	private final static org.apache.log4j.Logger CLASS_LOGGER = org.apache.log4j.Logger.getLogger(QBrowser.class);
-	private final static org.apache.log4j.Logger EXCEPTION_LOGGER = org.apache.log4j.Logger.getLogger("ExceptionCatcher");
+	private final static org.slf4j.Logger CLASS_LOGGER = org.slf4j.LoggerFactory.getLogger(QBrowser.class);
+	private final static org.slf4j.Logger EXCEPTION_LOGGER = org.slf4j.LoggerFactory.getLogger("ExceptionCatcher");
 	private javax.swing.JPanel topLevel;
 	private javax.swing.JToolBar tb;
 	private javax.swing.Action openAction;

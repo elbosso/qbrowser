@@ -35,8 +35,8 @@ import java.awt.event.ActionEvent;
 
 public class MessageDetailPanel extends javax.swing.JPanel implements java.awt.event.ActionListener
 {
-	private final static org.apache.log4j.Logger CLASS_LOGGER = org.apache.log4j.Logger.getLogger(MessageDetailPanel.class);
-	private final static org.apache.log4j.Logger EXCEPTION_LOGGER = org.apache.log4j.Logger.getLogger("ExceptionCatcher");
+	private final static org.slf4j.Logger CLASS_LOGGER = org.slf4j.LoggerFactory.getLogger(MessageDetailPanel.class);
+	private final static org.slf4j.Logger EXCEPTION_LOGGER = org.slf4j.LoggerFactory.getLogger("ExceptionCatcher");
 	private javax.swing.JTable headerTable;
 	private javax.swing.JTable propertiesTable;
 	private de.netsysit.ui.components.DockingPanel dockingPanel;
@@ -201,7 +201,7 @@ public class MessageDetailPanel extends javax.swing.JPanel implements java.awt.e
 			if (message != null)
 			{
 				java.util.Map<java.lang.String, java.lang.String> headerMap = jmsHeadersToHashMap(message);
-				if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(headerMap);
+				if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(java.util.Objects.toString(headerMap));
 				hpt.putAll(headerMap);
 				java.util.Map<java.lang.String, java.lang.String> propertiesMap = new java.util.HashMap();
 				for (java.util.Enumeration e = message.getPropertyNames();e.hasMoreElements();)

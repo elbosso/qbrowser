@@ -46,8 +46,8 @@ public class QueueBrowserPanel extends javax.swing.JPanel implements de.elbosso.
 	,javax.swing.event.ListSelectionListener
 	,java.awt.event.MouseListener
 {
-	private final static org.apache.log4j.Logger CLASS_LOGGER = org.apache.log4j.Logger.getLogger(QueueBrowserPanel.class);
-	private final static org.apache.log4j.Logger EXCEPTION_LOGGER = org.apache.log4j.Logger.getLogger("ExceptionCatcher");
+	private final static org.slf4j.Logger CLASS_LOGGER = org.slf4j.LoggerFactory.getLogger(QueueBrowserPanel.class);
+	private final static org.slf4j.Logger EXCEPTION_LOGGER = org.slf4j.LoggerFactory.getLogger("ExceptionCatcher");
 	private final javax.jms.Session session;
 	private final JSpinner textMessageNumberSpinner;
 	private de.elbosso.model.table.JMSMessageCollectionModel model;

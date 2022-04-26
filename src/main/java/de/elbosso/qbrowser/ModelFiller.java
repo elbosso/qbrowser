@@ -39,8 +39,8 @@ import java.util.Enumeration;
 
 public class ModelFiller extends java.lang.Object implements Runnable
 {
-	private final static org.apache.log4j.Logger CLASS_LOGGER = org.apache.log4j.Logger.getLogger(ModelFiller.class);
-	private final static org.apache.log4j.Logger EXCEPTION_LOGGER = org.apache.log4j.Logger.getLogger("ExceptionCatcher");
+	private final static org.slf4j.Logger CLASS_LOGGER = org.slf4j.LoggerFactory.getLogger(ModelFiller.class);
+	private final static org.slf4j.Logger EXCEPTION_LOGGER = org.slf4j.LoggerFactory.getLogger("ExceptionCatcher");
 	private final de.netsysit.util.validator.Rule[] rules;
 	private final Enumeration enumeration;
 	private final JMSMessageCollectionModel model;

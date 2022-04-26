@@ -35,21 +35,21 @@ import org.apache.activemq.artemis.api.core.management.ResourceNames;
 
 public class ConnectionPanelSupport extends java.lang.Object
 {
-	private final static org.apache.log4j.Logger CLASS_LOGGER = org.apache.log4j.Logger.getLogger(ConnectionPanelSupport.class);
-	private final static org.apache.log4j.Logger EXCEPTION_LOGGER = org.apache.log4j.Logger.getLogger("ExceptionCatcher");
+	private final static org.slf4j.Logger CLASS_LOGGER = org.slf4j.LoggerFactory.getLogger(ConnectionPanelSupport.class);
+	private final static org.slf4j.Logger EXCEPTION_LOGGER = org.slf4j.LoggerFactory.getLogger("ExceptionCatcher");
 
 	static void buildAndManageTreeModel(ConnectionPanel connectionPanel) throws java.lang.Exception
 	{
 		javax.jms.ConnectionMetaData connectionMetaData=connectionPanel.connection.getMetaData();
-		if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace("getJMSProviderName() "+connectionMetaData.getJMSProviderName());
-		if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace("getProviderMajorVersion() "+connectionMetaData.getProviderMajorVersion());
-		if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace("getProviderMinorVersion() "+connectionMetaData.getProviderMinorVersion());
-		if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace("getProviderVersion() "+connectionMetaData.getProviderVersion());
+		if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace("getJMSProviderName() "+connectionMetaData.getJMSProviderName());
+		if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace("getProviderMajorVersion() "+connectionMetaData.getProviderMajorVersion());
+		if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace("getProviderMinorVersion() "+connectionMetaData.getProviderMinorVersion());
+		if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace("getProviderVersion() "+connectionMetaData.getProviderVersion());
 		java.util.Enumeration en=connectionMetaData.getJMSXPropertyNames();
 		while(en.hasMoreElements())
 		{
 			java.lang.Object ref = en.nextElement();
-			if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace("getJMSXPropertyNames() "+ref);
+			if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace("getJMSXPropertyNames() "+ref);
 		}
 		if(connectionMetaData.getJMSProviderName().equals("ActiveMQ"))
 		{
@@ -64,7 +64,7 @@ public class ConnectionPanelSupport extends java.lang.Object
 			}
 			else
 			{
-				if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace("getJMSProviderName() "+connectionPanel.connection.getClass());
+				if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace("getJMSProviderName() "+connectionPanel.connection.getClass());
 				if(connectionPanel.connection.getClass().getName().equals("org.apache.activemq.ActiveMQConnection"))
 					buildAndManageTreeModelActiveMQ5x(connectionPanel);
 				else
@@ -88,7 +88,7 @@ public class ConnectionPanelSupport extends java.lang.Object
 		{
 			System.out.println("Queue name: " + queueName+" "+(queueName.getClass()));
 			javax.jms.Queue queueInQuestion = org.apache.activemq.artemis.api.jms.ActiveMQJMSClient.createQueue(queueName.toString());
-			if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(queueInQuestion);
+			if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(java.util.Objects.toString(queueInQuestion));
 			javax.swing.tree.DefaultMutableTreeNode node=new javax.swing.tree.DefaultMutableTreeNode(queueInQuestion);
 			connectionPanel.treeModel.insertNodeInto(node,connectionPanel.queueNode,connectionPanel.queueNode.getChildCount());
 		}
@@ -99,26 +99,26 @@ public class ConnectionPanelSupport extends java.lang.Object
 		destinationSource.start();
 		final java.util.Set<org.apache.activemq.command.ActiveMQQueue> queues = destinationSource.getQueues();
 
-		if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(queues.size());
+		if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(java.lang.Integer.toString(queues.size()));
 		for (Object object : queues)
 		{
-			if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(object);
+			if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(java.util.Objects.toString(object));
 			javax.swing.tree.DefaultMutableTreeNode node=new javax.swing.tree.DefaultMutableTreeNode(object);
 			connectionPanel.treeModel.insertNodeInto(node,connectionPanel.queueNode,connectionPanel.queueNode.getChildCount());
 		}
 		java.util.Set<org.apache.activemq.command.ActiveMQTempQueue> tqueues = destinationSource.getTemporaryQueues();
-		if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(tqueues.size());
+		if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(java.lang.Integer.toString(tqueues.size()));
 		for (Object object : tqueues)
 		{
-			if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(object);
+			if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(java.util.Objects.toString(object));
 			javax.swing.tree.DefaultMutableTreeNode node=new javax.swing.tree.DefaultMutableTreeNode(object);
 			connectionPanel.treeModel.insertNodeInto(node,connectionPanel.tqueueNode,connectionPanel.tqueueNode.getChildCount());
 		}
 		java.util.Set<org.apache.activemq.command.ActiveMQTopic> topics = destinationSource.getTopics();
-		if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(topics.size());
+		if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(java.lang.Integer.toString(topics.size()));
 		for (Object object : topics)
 		{
-			if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(object);
+			if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(java.util.Objects.toString(object));
 			javax.swing.tree.DefaultMutableTreeNode node=new javax.swing.tree.DefaultMutableTreeNode(object);
 			connectionPanel.treeModel.insertNodeInto(node,connectionPanel.topicNode,connectionPanel.topicNode.getChildCount());
 		}
@@ -133,7 +133,7 @@ public class ConnectionPanelSupport extends java.lang.Object
 					{
 						if (event.isAddOperation())
 						{
-							if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(d+" added");
+							if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(d+" added");
 							javax.swing.tree.DefaultMutableTreeNode node=new javax.swing.tree.DefaultMutableTreeNode(d);
 							connectionPanel.treeModel.insertNodeInto(node,connectionPanel.queueNode,connectionPanel.queueNode.getChildCount());
 							connectionPanel.tree.repaint();
@@ -142,7 +142,7 @@ public class ConnectionPanelSupport extends java.lang.Object
 						{
 							if (event.isRemoveOperation())
 							{
-								if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(d+" removed");
+								if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(d+" removed");
 							}
 						}
 					}
@@ -150,7 +150,7 @@ public class ConnectionPanelSupport extends java.lang.Object
 					{
 						if (event.isAddOperation())
 						{
-							if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(d+" added");
+							if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(d+" added");
 							javax.swing.tree.DefaultMutableTreeNode node=new javax.swing.tree.DefaultMutableTreeNode(d);
 							connectionPanel.treeModel.insertNodeInto(node,connectionPanel.tqueueNode,connectionPanel.tqueueNode.getChildCount());
 						}
@@ -158,7 +158,7 @@ public class ConnectionPanelSupport extends java.lang.Object
 						{
 							if (event.isRemoveOperation())
 							{
-								if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(d+" removed");
+								if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(d+" removed");
 							}
 						}
 					}
@@ -166,7 +166,7 @@ public class ConnectionPanelSupport extends java.lang.Object
 					{
 						if (event.isAddOperation())
 						{
-							if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(d+" added");
+							if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(d+" added");
 							javax.swing.tree.DefaultMutableTreeNode node=new javax.swing.tree.DefaultMutableTreeNode(d);
 							connectionPanel.treeModel.insertNodeInto(node,connectionPanel.topicNode,connectionPanel.topicNode.getChildCount());
 						}
@@ -174,7 +174,7 @@ public class ConnectionPanelSupport extends java.lang.Object
 						{
 							if (event.isRemoveOperation())
 							{
-								if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(d+" removed");
+								if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(d+" removed");
 							}
 						}
 					}
@@ -185,19 +185,19 @@ public class ConnectionPanelSupport extends java.lang.Object
 	static boolean manageNodeSelection(javax.swing.tree.DefaultMutableTreeNode selectedNode,ConnectionPanel connectionPanel) throws javax.jms.JMSException
 	{
 		javax.jms.ConnectionMetaData connectionMetaData = connectionPanel.connection.getMetaData();
-		if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))
+		if (CLASS_LOGGER.isTraceEnabled())
 			CLASS_LOGGER.trace("getJMSProviderName() " + connectionMetaData.getJMSProviderName());
-		if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))
+		if (CLASS_LOGGER.isTraceEnabled())
 			CLASS_LOGGER.trace("getProviderMajorVersion() " + connectionMetaData.getProviderMajorVersion());
-		if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))
+		if (CLASS_LOGGER.isTraceEnabled())
 			CLASS_LOGGER.trace("getProviderMinorVersion() " + connectionMetaData.getProviderMinorVersion());
-		if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))
+		if (CLASS_LOGGER.isTraceEnabled())
 			CLASS_LOGGER.trace("getProviderVersion() " + connectionMetaData.getProviderVersion());
 		java.util.Enumeration en = connectionMetaData.getJMSXPropertyNames();
 		while (en.hasMoreElements())
 		{
 			java.lang.Object ref = en.nextElement();
-			if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))
+			if (CLASS_LOGGER.isTraceEnabled())
 				CLASS_LOGGER.trace("getJMSXPropertyNames() " + ref);
 		}
 		if (connectionMetaData.getJMSProviderName().equals("ActiveMQ"))
@@ -215,7 +215,7 @@ public class ConnectionPanelSupport extends java.lang.Object
 			}
 			else
 			{
-				if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))
+				if (CLASS_LOGGER.isTraceEnabled())
 					CLASS_LOGGER.trace("getJMSProviderName() " + connectionPanel.connection.getClass());
 				if (connectionPanel.connection.getClass().getName().equals("org.apache.activemq.ActiveMQConnection"))
 					return manageNodeSelectionActiveMQ5x(selectedNode, connectionPanel);
@@ -242,7 +242,7 @@ public class ConnectionPanelSupport extends java.lang.Object
 		}
 		else
 		{
-			if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.WARN))CLASS_LOGGER.warn(ref.getClass());
+			if (CLASS_LOGGER.isWarnEnabled())CLASS_LOGGER.warn(java.util.Objects.toString(ref.getClass()));
 		}
 		return rv;
 	}
@@ -265,22 +265,22 @@ public class ConnectionPanelSupport extends java.lang.Object
 		else
 		{
 			rv=false;
-			if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.WARN))CLASS_LOGGER.warn(ref.getClass());
+			if (CLASS_LOGGER.isWarnEnabled())CLASS_LOGGER.warn(java.util.Objects.toString(ref.getClass()));
 		}
 		return rv;
 	}
 	static java.lang.String getDestinationName(DefaultMutableTreeNode selectedNode, ConnectionPanel connectionPanel) throws javax.jms.JMSException
 	{
 		javax.jms.ConnectionMetaData connectionMetaData=connectionPanel.connection.getMetaData();
-		if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace("getJMSProviderName() "+connectionMetaData.getJMSProviderName());
-		if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace("getProviderMajorVersion() "+connectionMetaData.getProviderMajorVersion());
-		if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace("getProviderMinorVersion() "+connectionMetaData.getProviderMinorVersion());
-		if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace("getProviderVersion() "+connectionMetaData.getProviderVersion());
+		if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace("getJMSProviderName() "+connectionMetaData.getJMSProviderName());
+		if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace("getProviderMajorVersion() "+connectionMetaData.getProviderMajorVersion());
+		if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace("getProviderMinorVersion() "+connectionMetaData.getProviderMinorVersion());
+		if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace("getProviderVersion() "+connectionMetaData.getProviderVersion());
 		java.util.Enumeration en=connectionMetaData.getJMSXPropertyNames();
 		while(en.hasMoreElements())
 		{
 			java.lang.Object ref = en.nextElement();
-			if(CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace("getJMSXPropertyNames() "+ref);
+			if(CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace("getJMSXPropertyNames() "+ref);
 		}
 		if(connectionMetaData.getJMSProviderName().equals("ActiveMQ"))
 		{
@@ -297,7 +297,7 @@ public class ConnectionPanelSupport extends java.lang.Object
 			}
 			else
 			{
-				if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))
+				if (CLASS_LOGGER.isTraceEnabled())
 					CLASS_LOGGER.trace("getJMSProviderName() " + connectionPanel.connection.getClass());
 				if (connectionPanel.connection.getClass().getName().equals("org.apache.activemq.ActiveMQConnection"))
 					return getDestinationNameActiveMQ5x(selectedNode, connectionPanel);

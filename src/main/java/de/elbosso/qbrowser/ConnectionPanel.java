@@ -29,7 +29,6 @@ UNERLAUBTE HANDLUNG (INKLUSIVE FAHRLAESSIGKEIT) VERANTWORTLICH, AUF WELCHEM
 WEG SIE AUCH IMMER DURCH DIE BENUTZUNG DIESER SOFTWARE ENTSTANDEN SIND, SOGAR,
 WENN SIE AUF DIE MOEGLICHKEIT EINES SOLCHEN SCHADENS HINGEWIESEN WORDEN SIND.
  */
-import org.apache.log4j.Level;
 
 import javax.jms.*;
 import javax.swing.*;
@@ -40,8 +39,8 @@ public class ConnectionPanel extends javax.swing.JPanel implements java.lang.Aut
 ,javax.swing.event.TreeSelectionListener
 	,de.elbosso.util.pattern.command.RefreshAction.Refreshable
 {
-	private final static org.apache.log4j.Logger CLASS_LOGGER = org.apache.log4j.Logger.getLogger(ConnectionPanel.class);
-	private final static org.apache.log4j.Logger EXCEPTION_LOGGER = org.apache.log4j.Logger.getLogger("ExceptionCatcher");
+	private final static org.slf4j.Logger CLASS_LOGGER = org.slf4j.LoggerFactory.getLogger(ConnectionPanel.class);
+	private final static org.slf4j.Logger EXCEPTION_LOGGER = org.slf4j.LoggerFactory.getLogger("ExceptionCatcher");
 	final javax.jms.Connection connection;
 	private final javax.jms.Session session;
 	javax.swing.tree.DefaultTreeModel treeModel;
@@ -102,8 +101,8 @@ public class ConnectionPanel extends javax.swing.JPanel implements java.lang.Aut
 				{
 					if(paths.length>0)
 					{
-						if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(paths[paths.length - 1].getLastPathComponent());
-						if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(paths[paths.length - 1].getLastPathComponent().getClass());
+						if (CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(java.util.Objects.toString(paths[paths.length - 1].getLastPathComponent()));
+						if (CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(java.util.Objects.toString(paths[paths.length - 1].getLastPathComponent().getClass()));
 						if(javax.swing.tree.DefaultMutableTreeNode.class.isAssignableFrom(paths[paths.length - 1].getLastPathComponent().getClass()))
 						{
 							javax.swing.tree.DefaultMutableTreeNode dmtn=(javax.swing.tree.DefaultMutableTreeNode)paths[paths.length - 1].getLastPathComponent();
@@ -145,8 +144,8 @@ public class ConnectionPanel extends javax.swing.JPanel implements java.lang.Aut
 		{
 			if(paths.length>0)
 			{
-				if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(paths[paths.length - 1].getLastPathComponent());
-				if (CLASS_LOGGER.isEnabledFor(org.apache.log4j.Level.TRACE))CLASS_LOGGER.trace(paths[paths.length - 1].getLastPathComponent().getClass());
+				if (CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(java.util.Objects.toString(paths[paths.length - 1].getLastPathComponent()));
+				if (CLASS_LOGGER.isTraceEnabled())CLASS_LOGGER.trace(java.util.Objects.toString(paths[paths.length - 1].getLastPathComponent().getClass()));
 				if(javax.swing.tree.DefaultMutableTreeNode.class.isAssignableFrom(paths[paths.length - 1].getLastPathComponent().getClass()))
 				{
 					javax.swing.tree.DefaultMutableTreeNode dmtn=(javax.swing.tree.DefaultMutableTreeNode)paths[paths.length - 1].getLastPathComponent();

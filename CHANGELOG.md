@@ -2,8 +2,13 @@
 
 Changelog of Git Changelog Maven plugin.
 
-## Unreleased
+## 1.1.0
 ### No issue
+
+**dependency management**
+
+
+[1aef603df40e2b3](https://github.com/elbosso/qbrowser/commit/1aef603df40e2b3) Juergen Key *2022-01-04 07:36:48*
 
 **icon sizing issues**
 
