@@ -81,7 +81,7 @@ public class ConnectionPanelSupport extends java.lang.Object
 		javax.jms.Queue managementQueue = org.apache.activemq.artemis.api.jms.ActiveMQJMSClient.createQueue("activemq.management");
 		javax.jms.QueueRequestor requestor = new javax.jms.QueueRequestor(session, managementQueue);
 		javax.jms.Message m = session.createMessage();
-		org.apache.activemq.artemis.api.jms.management.JMSManagementHelper.putAttribute(m, ResourceNames.JMS_SERVER, "queueNames");
+		org.apache.activemq.artemis.api.jms.management.JMSManagementHelper.putAttribute(m, ResourceNames.BROKER, "queueNames");
 		javax.jms.Message reply = requestor.request(m);
 		Object[] queueNames = (Object[]) org.apache.activemq.artemis.api.jms.management.JMSManagementHelper.getResult(reply);
 		for (Object queueName : queueNames)

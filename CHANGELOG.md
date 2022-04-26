@@ -2,6 +2,30 @@
 
 Changelog of Git Changelog Maven plugin.
 
+## Unreleased
+### GitHub #7 
+
+**re #7**
+
+
+[59b7109fb658476](https://github.com/elbosso/qbrowser/commit/59b7109fb658476) Juergen Key *2022-04-26 04:30:56*
+
+
+### No issue
+
+**Bump apache-artemis from 1.5.5 to 2.16.0**
+
+ * Bumps apache-artemis from 1.5.5 to 2.16.0.
+ * ---
+ * updated-dependencies:
+ * - dependency-name: org.apache.activemq:apache-artemis
+ * dependency-type: direct:production
+ * ...
+ * Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+
+[8aafb11a4bc27ea](https://github.com/elbosso/qbrowser/commit/8aafb11a4bc27ea) dependabot[bot] *2021-09-12 15:28:55*
+
+
 ## 1.1.0
 ### No issue
 
@@ -66,7 +90,7 @@ Changelog of Git Changelog Maven plugin.
 
 
 ## refs/tags/1.0.1
-### GitHub [#1](https://github.com/elbosso/qbrowser/issues/1) Update MessageTableModel in QBrowser in background
+### GitHub #1 
 
 **fixes #1**
 
@@ -79,7 +103,7 @@ Changelog of Git Changelog Maven plugin.
 [8edba0d11b179d6](https://github.com/elbosso/qbrowser/commit/8edba0d11b179d6) Juergen Key *2018-05-16 15:03:27*
 
 
-### GitHub [#2](https://github.com/elbosso/qbrowser/issues/2) Fix Icons in Exception management dialog
+### GitHub #2 
 
 **fixes #2 (as soon as the new version of artifact util is live)**
 
@@ -87,7 +111,7 @@ Changelog of Git Changelog Maven plugin.
 [3cf693c3e4b776f](https://github.com/elbosso/qbrowser/commit/3cf693c3e4b776f) Juergen Key *2018-02-04 12:16:34*
 
 
-### GitHub [#3](https://github.com/elbosso/qbrowser/issues/3) being able to inspect binary data  with appropriate preview
+### GitHub #3 
 
 **re #3**
 
@@ -100,7 +124,7 @@ Changelog of Git Changelog Maven plugin.
 [0147c1fbeece496](https://github.com/elbosso/qbrowser/commit/0147c1fbeece496) Juergen Key *2018-02-04 17:45:53*
 
 
-### GitHub [#4](https://github.com/elbosso/qbrowser/issues/4) Make a component that is able to send an arbitrary number of different Messages into one ore more Queues
+### GitHub #4 
 
 **fixes #4**
 
@@ -108,7 +132,7 @@ Changelog of Git Changelog Maven plugin.
 [c06304e9508debb](https://github.com/elbosso/qbrowser/commit/c06304e9508debb) Juergen Key *2018-03-01 19:56:53*
 
 
-### GitHub [#5](https://github.com/elbosso/qbrowser/issues/5) act upon security vulnerability 
+### GitHub #5 
 
 **fixes #5**
 
