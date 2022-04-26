@@ -3,7 +3,12 @@
 Changelog of Git Changelog Maven plugin.
 
 ## Unreleased
-### GitHub #7 
+### GitHub [#7](https://github.com/elbosso/qbrowser/issues/7) get rid of log4j and use the new bom dependency
+
+**re #7**
+
+
+[687ef6e75791ab5](https://github.com/elbosso/qbrowser/commit/687ef6e75791ab5) Juergen Key *2022-04-26 04:40:28*
 
 **re #7**
 
@@ -90,7 +95,7 @@ Changelog of Git Changelog Maven plugin.
 
 
 ## refs/tags/1.0.1
-### GitHub #1 
+### GitHub [#1](https://github.com/elbosso/qbrowser/issues/1) Update MessageTableModel in QBrowser in background
 
 **fixes #1**
 
@@ -103,7 +108,7 @@ Changelog of Git Changelog Maven plugin.
 [8edba0d11b179d6](https://github.com/elbosso/qbrowser/commit/8edba0d11b179d6) Juergen Key *2018-05-16 15:03:27*
 
 
-### GitHub #2 
+### GitHub [#2](https://github.com/elbosso/qbrowser/issues/2) Fix Icons in Exception management dialog
 
 **fixes #2 (as soon as the new version of artifact util is live)**
 
@@ -111,7 +116,7 @@ Changelog of Git Changelog Maven plugin.
 [3cf693c3e4b776f](https://github.com/elbosso/qbrowser/commit/3cf693c3e4b776f) Juergen Key *2018-02-04 12:16:34*
 
 
-### GitHub #3 
+### GitHub [#3](https://github.com/elbosso/qbrowser/issues/3) being able to inspect binary data  with appropriate preview
 
 **re #3**
 
@@ -124,7 +129,7 @@ Changelog of Git Changelog Maven plugin.
 [0147c1fbeece496](https://github.com/elbosso/qbrowser/commit/0147c1fbeece496) Juergen Key *2018-02-04 17:45:53*
 
 
-### GitHub #4 
+### GitHub [#4](https://github.com/elbosso/qbrowser/issues/4) Make a component that is able to send an arbitrary number of different Messages into one ore more Queues
 
 **fixes #4**
 
@@ -132,7 +137,7 @@ Changelog of Git Changelog Maven plugin.
 [c06304e9508debb](https://github.com/elbosso/qbrowser/commit/c06304e9508debb) Juergen Key *2018-03-01 19:56:53*
 
 
-### GitHub #5 
+### GitHub [#5](https://github.com/elbosso/qbrowser/issues/5) act upon security vulnerability 
 
 **fixes #5**
 
